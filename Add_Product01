@@ -28,6 +28,8 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _unitPriceController = TextEditingController();
+  final TextEditingController _barcodeController =
+      TextEditingController(); // New controller for barcode
   String _stockStatus = 'Available';
   File? _image;
 
@@ -108,7 +110,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       : Image.file(_image!, fit: BoxFit.cover),
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 25),
               TextFormField(
                 controller: _productNameController,
                 decoration: InputDecoration(
@@ -169,6 +171,25 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               SizedBox(height: 25),
+              // Updated Barcode Field
+              TextFormField(
+                controller: _barcodeController,
+                decoration: InputDecoration(
+                  labelText: 'หมายเลข Barcode',
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                  ),
+                  prefixIcon: Icon(Icons.home_max, color: Colors.teal),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'โปรดใส่หมายเลข Barcode';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 25),
               TextFormField(
                 controller: _unitPriceController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -213,7 +234,6 @@ class _AddProductPageState extends State<AddProductPage> {
                   });
                 },
               ),
-              SizedBox(height: 25),
               SizedBox(height: 50),
               ElevatedButton(
                 onPressed: _addProduct,
